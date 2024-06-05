@@ -20,7 +20,7 @@ import org.JoaquinGonzalez.system.Main;
 public class MenuPrincipalController implements Initializable {
     private Main stage;
     @FXML
-    MenuItem btnClientes,btnTicketSoporte,btnMenuProducto,btnCargos,btnCompras,btnCategorias,btnDistribuidores;
+    MenuItem btnClientes,btnTicketSoporte,btnMenuProducto,btnCargos,btnCompras,btnCategorias,btnDistribuidores,btnEmpleados,btnFacturas,btnDetalle,btnPromociones;
     
     @FXML
     public void handleButtonAction(ActionEvent event)throws Exception{
@@ -37,10 +37,17 @@ public class MenuPrincipalController implements Initializable {
         } else if(event.getSource() == btnCategorias){
             stage.menuCategoriaProductoView();  
         } else if(event.getSource() == btnDistribuidores){
-            stage.menuDistribuidorView();     
-        }  
-        
+            stage.menuDistribuidorView();        
+        } else if(event.getSource() == btnEmpleados){
+            stage.menuEmpleadosView();  
+        } else if(event.getSource() == btnFacturas){
+            stage.menuFacturaView();   
+        } else if(event.getSource() == btnDetalle){
+            stage.menuDetalleFacturaView();  
+        } else if(event.getSource() == btnPromociones){
+            stage.menuPromocionView();     
     }
+        }
         
     @Override
     public void initialize(URL location, ResourceBundle resources){

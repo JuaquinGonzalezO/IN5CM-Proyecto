@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="542.0" prefWidth="836.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.JoaquinGonzalez.controller.MenuDetalleFacturaController">
+   <children>
+      <ImageView fitHeight="542.0" fitWidth="836.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Detalle%20Factura.png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="47.0" layoutY="128.0" prefHeight="33.0" prefWidth="191.0" />
+      <ComboBox layoutX="47.0" layoutY="223.0" prefHeight="33.0" prefWidth="191.0" />
+      <ComboBox layoutX="47.0" layoutY="314.0" prefHeight="33.0" prefWidth="191.0" />
+      <TableView layoutX="270.0" layoutY="71.0" prefHeight="416.0" prefWidth="555.0">
+        <columns>
+            <TableColumn fx:id="colDetalleFacturaId" prefWidth="100.0" text="detalleFacturaId" />
+          <TableColumn prefWidth="231.0" text="Factura" />
+          <TableColumn prefWidth="223.0" text="Producto" />
+        </columns>
+      </TableView>
+      <Button layoutX="34.0" layoutY="394.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="78.0" text="Guardar" />
+      <Button layoutX="149.0" layoutY="394.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="78.0" text="Vaciar" />
+      <TextField layoutX="458.0" layoutY="496.0" prefHeight="25.0" prefWidth="237.0" />
+      <Button layoutX="731.0" layoutY="496.0" mnemonicParsing="false" text="Buscar" />
+      <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="88.0" text="Regresar" />
+      <Button layoutX="88.0" layoutY="450.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="78.0" text="Eliminar" />
+   </children>
+</AnchorPane>

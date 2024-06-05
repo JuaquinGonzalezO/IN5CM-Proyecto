@@ -24,6 +24,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.JoaquinGonzalez.dao.Conexion;
+import org.JoaquinGonzalez.dto.CargosDTO;
+import org.JoaquinGonzalez.model.Cargos;
 import org.JoaquinGonzalez.model.Compra;
 import org.JoaquinGonzalez.system.Main;
 
@@ -100,22 +102,8 @@ public class MenuComprasController implements Initializable {
             }
         } else if(event.getSource() == btnEditar){
             
-        if(!tfFechaCompra.getText().equals("") && !tfTotalCompra.getText().equals("")){
-        editarCargos();
-        CargosDTO.getCargosDTO().setCargos(null);
-        cargarDatos();
-        }
-            } else if (event.getSource() == btnEliminar){
-          eliminarCargo(((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getCargoId());
-          cargarDatos();
-      
-            
-            }else if (event.getSource() == btnBuscar){
-            tblCompras.getItems().clear();
-            tfCompraId.getText().equals("");
-            tblCompras.getItems().add(buscarCargos());
-        }
-    }
+   }
+      }
     
   public ObservableList<Compra> ListarCompras() {
         ArrayList<Compra> Compras = new ArrayList<>();

@@ -18,10 +18,17 @@ import org.JoaquinGonzalez.controller.MenuCargoController;
 import org.JoaquinGonzalez.controller.MenuCategoriaProductoController;
 import org.JoaquinGonzalez.controller.MenuClientesController;
 import org.JoaquinGonzalez.controller.MenuComprasController;
+import org.JoaquinGonzalez.controller.MenuDetalleFacturaController;
 import org.JoaquinGonzalez.controller.MenuDistribuidoresController;
+import org.JoaquinGonzalez.controller.MenuEmpleadosController;
+import org.JoaquinGonzalez.controller.MenuFacturaController;
 import org.JoaquinGonzalez.controller.MenuPrincipalController;
 import org.JoaquinGonzalez.controller.MenuProductoController;
+import org.JoaquinGonzalez.controller.MenuPromocionController;
+
+
 import org.JoaquinGonzalez.controller.MenuTicketSoporteController;
+
 
 /**
  *
@@ -152,6 +159,56 @@ public class Main extends Application {
      
         }
     }  
+    
+    
+    public void menuEmpleadosView(){
+            try{
+                MenuEmpleadosController menuEmpleadosView = (MenuEmpleadosController) switchScene ("MenuEmpleadosView.fxml", 1190, 742);
+                menuEmpleadosView.setStage(this);
+            }catch(Exception e){
+            System.out.println(e.getMessage());
+     
+        }
+    }
+      
+         public void menuFacturaView(){
+            try{
+                MenuFacturaController menuFacturaView = (MenuFacturaController) switchScene ("MenuFacturaView.fxml", 750, 450);
+                menuFacturaView.setStage(this);
+            }catch(Exception e){
+            System.out.println(e.getMessage());
+     
+        }
+    }  
+         
+         public void menuPromocionView(){
+            try{
+                MenuPromocionController menuPromocionView = (MenuPromocionController) switchScene ("MenuPromocionView.fxml", 1200, 750);
+                menuPromocionView.setStage(this);
+            }catch(Exception e){
+            System.out.println(e.getMessage());
+     
+        }
+    }   
+        public void menuDetalleFacturaView(){
+             try{
+                MenuDetalleFacturaController menuDetalleFacturaView = (MenuDetalleFacturaController) switchScene ("MenuDetalleFacturaView.fxml", 836, 536);
+                menuDetalleFacturaView.setStage(this);
+            }catch(Exception e){
+            System.out.println(e.getMessage());
+     
+        }
+    }   
+        
+         public void menuPromocionView (){
+             try{
+                MenuPromocionController menuPromocionView = (MenuPromocionController) switchScene ("MenuPromocionView.fxml", 836, 536);
+                menuPromocionView.setStage(this);
+            }catch(Exception e){
+            System.out.println(e.getMessage());
+     
+        }
+    }   
         public static void main(String[]args){
             launch(args);
         }
