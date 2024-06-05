@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import org.JoaquinGonzalez.dao.Conexion;
-import org.JoaquinGonzalez.model.Producto;
 import org.JoaquinGonzalez.system.Main;
 
 
@@ -74,14 +72,6 @@ public class MenuProductoController implements Initializable {
 
            if(event.getSource() == btnCargar){
             agregarProducto();
-        }else if (event.getSource() == btnBuscar){
-            Producto producto = buscarProducto();
-            if(producto != null){
-                lblNombreProducto.setText(producto.getNombreProducto());
-               InputStream file = producto.getImage().getBinaryStream();
-               Image image = new Image(file);
-               imgMostrar.setImage(image);
-            } 
         } else if(event.getSource() == btnRegresar){
             stage.menuPrincipalView();
             }
@@ -140,36 +130,6 @@ public class MenuProductoController implements Initializable {
     
     
      
-    public Producto buscarProducto(){
-        Producto producto = null;
-        
-        try{
-            conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_buscarProducto(?)";
-            statement = conexion.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(tfProductoId.getText()));
-            resulSet = statement.executeQuery();
-            
-            if(resulSet.next()){
-                int productoId = resulSet.getInt("");
-                String nombreProducto = resulSet.getString("nombre");
-                String descripcionProducto = resulSet.getString("descripcionProducto");
-                int cantidadStock = resulSet.getInt("cantidadStock");
-                double precionVentaUnitario = resulSet.getDouble("precionVentaUnitario");
-                double precioVentaMayor = resulSet.getDouble("precioVentaMayor");
-                double precioCompra = resulSet.getDouble("precioCompra");
-                int distribuidorId = resulSet.getInt("distribuidorId");
-                int categoriaProductos = resulSet.getInt("categoriaProductos");
-                Blob image = resulSet.getBlob("image");
-                
-                producto = new Producto(productoId,nombreProducto,descripcionProducto,cantidadStock,precionVentaUnitario,precioVentaMayor,precioCompra,distribuidorId,categoriaProductos,image);
-            }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-       return producto; 
-    }
-    
     public Main getStage() {
         return stage;
     }

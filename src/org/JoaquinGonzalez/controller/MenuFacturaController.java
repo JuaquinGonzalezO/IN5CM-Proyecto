@@ -27,40 +27,28 @@ import org.JoaquinGonzalez.model.Empleados;
 import org.JoaquinGonzalez.model.Facturas;
 import org.JoaquinGonzalez.system.Main;
 import org.JoaquinGonzalez.utils.SuperKinalAlert;
-
-/**
- * FXML Controller class
- *
- * @author Phant
- */
+ 
 public class MenuFacturaController implements Initializable {
-   private Main Stage;
-    
+    private Main stage;
     private int op;
+    private static Connection conexion = null;
+    private static PreparedStatement statement = null;
+    private static ResultSet resultSet = null;
     
-    private Connection conexion = null;
-    private PreparedStatement statement = null;
-    private ResultSet resultSet = null;
-    
+   @FXML
+    Button btnGuardar, btnRegresar,btnCancelar,btnAgregar,btnEliminar,btnBuscar,btnVaciar;
     @FXML
-    TextField tfFacturaId, tfFecha, tfHora, tfTotal, tfFacturaBuscarId;
-        
+    TextField tfFacturaId,tfFecha,tfHora,tfTotal,tfBuscar;
     @FXML
-    ComboBox cmbCliente, cmbEmpleado;
-    
+    ComboBox cmbCliente,cmbEmpleado;
+    @FXML
+    TableColumn colFacturaId,colFecha,colHora,colCliente,colEmpleado,colTotal;
     @FXML
     TableView tblFacturas;
-    
     @FXML
-    TableColumn colFacturaId, colFecha, colHora, colCliente, colEmpleado, colTotal;
-    
-    @FXML
-    Button btnGuardar, btnVaciar, btnRegresar, btnEliminar, btnBuscar;
-    
-    @FXML
-     public void handleButtonAction(ActionEvent event){
+    public void handleButtonAction(ActionEvent event){
         if(event.getSource() == btnRegresar){
-            Stage.menuPrincipalView();
+            stage.menuPrincipalView();
         }else if(event.getSource() == btnGuardar){
             if(tfFacturaId.getText().equals("")){
                 agregarFactura();
@@ -70,7 +58,7 @@ public class MenuFacturaController implements Initializable {
                 cargarDatos();
             }
         }else if(event.getSource() == btnVaciar){
-            
+            vaciarForm();
         }else if(event.getSource() == btnEliminar){
             if(SuperKinalAlert.getInstance().mostrarAlertaConfirmacion(404).get() == ButtonType.OK){
                 eliminarFactura(((Facturas)tblFacturas.getSelectionModel().getSelectedItem()).getFacturaId());
@@ -79,7 +67,7 @@ public class MenuFacturaController implements Initializable {
         }else if(event.getSource() == btnBuscar){
             tblFacturas.getItems().clear();
             
-            if(tfFacturaBuscarId.getText().equals("")){
+            if(tfBuscar.getText().equals("")){
                 cargarDatos();
             }else{
                 op = 3;
@@ -87,19 +75,20 @@ public class MenuFacturaController implements Initializable {
             }
         }
     }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cargarDatos();
         cmbCliente.setItems(listarClientes());
         cmbEmpleado.setItems(listarEmpleados());
-    }
+    }    
     
-     public void cargarDatos(){
+    public void cargarDatos(){
         if(op == 3){
             tblFacturas.getItems().add(buscarFactura());
             op = 0;
         }else{
-        tblFacturas.setItems(listarFacturas());
+        tblFacturas.setItems(ListarFacturas());
             colFacturaId.setCellValueFactory(new PropertyValueFactory<Facturas, Integer>("facturaId"));
             colFecha.setCellValueFactory(new PropertyValueFactory<Facturas, Date>("fecha"));
             colHora.setCellValueFactory(new PropertyValueFactory<Facturas, Time>("hora"));
@@ -107,12 +96,34 @@ public class MenuFacturaController implements Initializable {
             colEmpleado.setCellValueFactory(new PropertyValueFactory<Facturas, String>("empleado"));
             colTotal.setCellValueFactory(new PropertyValueFactory<Facturas, Double>("total"));
         }
-    }    
-     
-     
-     
+
+    }
     
-     public int obtenerIndexCliente(){
+    public void vaciarForm(){
+        tfFacturaId.clear();
+        tfFecha.clear();
+        tfHora.clear();
+        cmbCliente.getSelectionModel().clearSelection();
+        cmbEmpleado.getSelectionModel().clearSelection();
+        tfTotal.clear();
+    }
+    
+    @FXML
+    public void cargarForm(){
+        Facturas f = (Facturas)tblFacturas.getSelectionModel().getSelectedItem();
+        Date fecha = f.getFecha();
+        Time hora = f.getHora();
+        if(f != null){
+            tfFacturaId.setText(Integer.toString(f.getFacturaId()));
+            tfFecha.setText(fecha.toString());
+            tfHora.setText(hora.toString());
+            cmbCliente.getSelectionModel().select(obtenerIndexCliente());
+            cmbEmpleado.getSelectionModel().select(obtenerIndexEmpleado());
+            tfTotal.setText(Double.toString(f.getTotal()));
+        }
+    }
+    
+    public int obtenerIndexCliente(){
         int index = 0;
         String clienteTbl = ((Facturas)tblFacturas.getSelectionModel().getSelectedItem()).getCliente();
         for(int i = 0 ; i <= cmbCliente.getItems().size() ; i++){
@@ -126,7 +137,7 @@ public class MenuFacturaController implements Initializable {
         
         return index;
     }
-       
+    
     public int obtenerIndexEmpleado(){
         int index = 0;
         String empleadoTbl = ((Facturas)tblFacturas.getSelectionModel().getSelectedItem()).getEmpleado();
@@ -142,7 +153,7 @@ public class MenuFacturaController implements Initializable {
         return index;
     }
     
-   public ObservableList<Facturas> listarFacturas(){
+    public ObservableList<Facturas> ListarFacturas(){
         ArrayList<Facturas> factura = new ArrayList<>();
         
         try{
@@ -156,9 +167,9 @@ public class MenuFacturaController implements Initializable {
                 Date fecha = resultSet.getDate("fecha");
                 Time hora = resultSet.getTime("hora");
                 String cliente = resultSet.getString("cliente");
-                String empleadoId = resultSet.getString("empleadoId");
+                String empleado = resultSet.getString("empleado");
                 double total = resultSet.getDouble("total");
-                factura.add(new Facturas(facturaId, fecha, hora, cliente, empleadoId, total));
+                factura.add(new Facturas(facturaId, fecha, hora, cliente, empleado, total));
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -180,46 +191,43 @@ public class MenuFacturaController implements Initializable {
         
         return FXCollections.observableList(factura);
     }
-
-    public ObservableList<Cliente> listarClientes(){
+    
+    public ObservableList<Cliente> listarClientes() {
         ArrayList<Cliente> clientes = new ArrayList<>();
-        
-        try{
+        try {
             conexion = Conexion.getInstance().obtenerConexion();
-            String sql = "call sp_ListarClientes()";
+            String sql = "Call sp_ListarClientes()";
             statement = conexion.prepareStatement(sql);
-            resultSet = statement.executeQuery();
-            
-            while(resultSet.next()){
+            resultSet =  statement.executeQuery();
+            while (resultSet.next()) {
                 int clienteId = resultSet.getInt("clienteId");
-                String nombre = resultSet.getString("nombre");  
+                String nombre = resultSet.getString("nombre");
                 String apellido = resultSet.getString("apellido");
                 String telefono = resultSet.getString("telefono");
-                String nit = resultSet.getString("nit");
                 String direccion = resultSet.getString("direccion");
-                
-                clientes.add(new Cliente(clienteId, nombre, apellido, telefono, nit, direccion));
+                String nit = resultSet.getString("nit");
+                clientes.add(new Cliente(clienteId, nombre, apellido, telefono, direccion, nit));
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }finally{
-            try{
-                if(resultSet != null){
+        } finally {
+            try {
+                if (resultSet != null) {
                     resultSet.close();
                 }
-                if(statement != null){
+                if (statement != null) {
                     statement.close();
                 }
-                if(conexion != null){
+                if (conexion != null) {
                     conexion.close();
                 }
-            }catch(SQLException e){
+            }catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         }
-        
         return FXCollections.observableList(clientes);
     }
+
     
     public ObservableList<Empleados> listarEmpleados(){
         ArrayList<Empleados> empleado = new ArrayList<>();
@@ -262,7 +270,7 @@ public class MenuFacturaController implements Initializable {
         return FXCollections.observableList(empleado);
     }
     
-     public void agregarFactura(){
+    public void agregarFactura(){
         try{
             conexion = Conexion.getInstance().obtenerConexion();
             String sql = "call sp_agregarFactura(?, ?, ?, ?, ?)";
@@ -315,7 +323,7 @@ public class MenuFacturaController implements Initializable {
                 System.out.println(e.getMessage());
             }
         }
-    } 
+    }
     
     public void eliminarFactura(int facId){
         try{
@@ -346,7 +354,7 @@ public class MenuFacturaController implements Initializable {
             conexion = Conexion.getInstance().obtenerConexion();
             String sql = "call sp_buscarFactura(?)";
             statement = conexion.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(tfFacturaBuscarId.getText()));
+            statement.setInt(1, Integer.parseInt(tfBuscar.getText()));
             resultSet = statement.executeQuery();
             
             if(resultSet.next()){
@@ -381,12 +389,13 @@ public class MenuFacturaController implements Initializable {
      
         return factura;
     }
+
     public Main getStage() {
-        return Stage;
+        return stage;
     }
 
-    public void setStage(Main Stage) {
-        this.Stage = Stage;
+    public void setStage(Main stage) {
+        this.stage = stage;
     }
     
 }

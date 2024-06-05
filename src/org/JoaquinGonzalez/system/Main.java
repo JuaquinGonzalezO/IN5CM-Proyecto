@@ -200,15 +200,7 @@ public class Main extends Application {
         }
     }   
         
-         public void menuPromocionView (){
-             try{
-                MenuPromocionController menuPromocionView = (MenuPromocionController) switchScene ("MenuPromocionView.fxml", 836, 536);
-                menuPromocionView.setStage(this);
-            }catch(Exception e){
-            System.out.println(e.getMessage());
-     
-        }
-    }   
+         
         public static void main(String[]args){
             launch(args);
         }

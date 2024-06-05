@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="742.0" prefWidth="1190.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.JoaquinGonzalez.controller.MenuEmpleadosController">
+   <children>
+      <ImageView fitHeight="750.0" fitWidth="1190.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Menú%20Empleados.png" />
+         </image>
+      </ImageView>
+      <TextField layoutX="68.0" layoutY="161.0" prefHeight="36.0" prefWidth="192.0" promptText="Empleado" />
+      <TextField layoutX="68.0" layoutY="275.0" prefHeight="36.0" prefWidth="192.0" promptText="Nombre" />
+      <TextField layoutX="68.0" layoutY="375.0" prefHeight="36.0" prefWidth="192.0" promptText="Sueldo" />
+      <TextField layoutX="61.0" layoutY="502.0" prefHeight="36.0" prefWidth="192.0" promptText="Hora Entrada" />
+      <TextField layoutX="61.0" layoutY="630.0" prefHeight="36.0" prefWidth="192.0" promptText="Hora Salida" />
+      <ComboBox fx:id="cmbCargo" layoutX="437.0" layoutY="155.0" prefHeight="36.0" prefWidth="173.0" />
+      <ComboBox fx:id="cmbEncargado" layoutX="728.0" layoutY="155.0" prefHeight="36.0" prefWidth="173.0" />
+      <TableView layoutX="337.0" layoutY="215.0" prefHeight="470.0" prefWidth="782.0">
+        <columns>
+          <TableColumn prefWidth="91.0" text="EmpleadoId" />
+          <TableColumn prefWidth="82.0" text="Nombre" />
+            <TableColumn prefWidth="68.0" text="Sueldo" />
+            <TableColumn prefWidth="94.0" text="Hora entrada" />
+            <TableColumn prefWidth="125.0" text="Hora Salida" />
+            <TableColumn prefWidth="135.0" text="Cargo" />
+            <TableColumn prefWidth="186.0" text="Encargado" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnAgregar" layoutX="415.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="102.0" text="Agregar" />
+      <Button fx:id="btnEditar" layoutX="664.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="102.0" text="Editar" />
+      <Button fx:id="btnEliminar" layoutX="935.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="102.0" text="Eliminar" />
+      <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="102.0" text="Regresar" />
+      <TextField fx:id="tfCompraId" layoutX="36.0" layoutY="693.0" prefHeight="28.0" prefWidth="243.0" promptText="EmpleadosId" />
+      <Button fx:id="btnBuscar" layoutX="287.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleButtonAction">
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/lupa.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
